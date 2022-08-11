@@ -44,18 +44,25 @@ def test_wiki_search_field():
         cart = chrome.find_element(By.ID, 'cart')
         cart.click()
 
-        price_duck = chrome.find_element(By.CLASS_NAME, 'unit-cost')
-        price_duck = price_duck[:-2]
-        price_all = chrome.find_element(By.CLASS_NAME, 'sum')
-        price_all = price_all[:-2]
+        price_duck = chrome.find_element(By.XPATH, '//*[@id="order_confirmation-wrapper"]/table/tbody/tr[2]/td[4]').text
+        price_duck = price_duck[1:]
+        price_all = chrome.find_element(By.XPATH, '//*[@id="order_confirmation-wrapper"]/table/tbody/tr[2]/td[6]').text
+        price_all = price_all[1:]
+
+        quantity = chrome.find_element(By.XPATH, '//*[@id="order_confirmation-wrapper"]/table/tbody/tr[2]/td[1]').text
+        assert float(price_duck) * float(quantity) == float(price_all)
         #print(float(price_duck)*3 == float(price_all))
 
-        text = chrome.find_element(By.NAME, 'tax_id')
-        text.send_keys(price_duck)
+        test_text = chrome.find_element(By.NAME, 'tax_id')
+        test_text.send_keys(price_duck)
         time.sleep(5)
 
+        test_text1 = chrome.find_element(By.NAME, 'company')
+        test_text1.send_keys(price_all)
+        time.sleep(5)
+
+        confirm_btn = chrome.find_element(By.XPATH, '//*[@id="order_confirmation-wrapper"]/form/div[2]/p/button')
+        confirm_btn.click()
 
     finally:
         chrome.quit()
-
-# for git

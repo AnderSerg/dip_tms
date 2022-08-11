@@ -51,5 +51,3 @@ def test_wiki_search_field():
 
     finally:
         chrome.quit()
-
-# for git
