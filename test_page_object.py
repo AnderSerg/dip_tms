@@ -90,3 +90,26 @@ def test_cart_and_confirm(open_browser):
     cart_page_test = CartPage(open_browser, open_browser.current_url)
     cart_page_test.price_duck()
     cart_page_test.confirm()
+
+
+import mysql.connector as mysql
+
+
+def test_sql():
+    db = mysql.connect(
+        host="localhost",
+        user="root",
+        passwd="",
+        database="litecart"
+    )
+
+    cursor = db.cursor()
+
+    cursor.execute("SHOW TABLES")
+    print(cursor.fetchall())
+
+    query = "SELECT customer_lastname FROM lc_orders ORDER BY customer_lastname DESC LIMIT 1"
+    cursor.execute(query)
+    print(cursor.fetchall())
+
+    db.close()

@@ -12,7 +12,7 @@ cursor = db.cursor()
 cursor.execute("SHOW TABLES")
 print(cursor.fetchall())
 
-query = "SELECT * FROM lc_orders"
+query = "SELECT customer_lastname FROM lc_orders ORDER BY customer_lastname DESC LIMIT 1"
 cursor.execute(query)
 print(cursor.fetchall())
 
