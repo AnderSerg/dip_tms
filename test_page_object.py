@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 
 from Pages.cart_page import CartPage
 from Pages.duck_page import DuckPage
@@ -10,7 +11,7 @@ from Pages.regional_settings_page import RegionalSettingsPage
 
 @pytest.fixture
 def open_browser():
-    chrome = webdriver.Chrome(ChromeDriverManager().install())
+    chrome = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     chrome.implicitly_wait(10)
     yield chrome
     chrome.quit()
