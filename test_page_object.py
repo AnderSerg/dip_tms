@@ -66,6 +66,7 @@ def test_duck(open_browser):
     main_page = MainPage(open_browser, link)
     main_page.open()
 
+    main_page.login_user()
     main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
@@ -78,6 +79,7 @@ def test_cart_and_confirm(open_browser):
     main_page = MainPage(open_browser, link)
     main_page.open()
 
+    main_page.login_user()
     main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
