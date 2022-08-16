@@ -1,3 +1,4 @@
+import allure
 import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
@@ -8,6 +9,8 @@ from Pages.duck_page import DuckPage
 from Pages.main_page import MainPage
 from Pages.regional_settings_page import RegionalSettingsPage
 
+import mysql.connector as mysql
+
 
 @pytest.fixture
 def open_browser():
@@ -17,25 +20,32 @@ def open_browser():
     chrome.quit()
 
 
+@allure.story("Open MainPage")
 def test_open_app(open_browser):
     link = "http://localhost/litecart/en/"
     main_page = MainPage(open_browser, link)
-    main_page.open()
+    with allure.step("Open"):
+        main_page.open()
 
 
+@allure.story("Change currency and country on Regional Settings page")
 def test_currency_and_country_change(open_browser):
     link = "http://localhost/litecart/en/"
     main_page = MainPage(open_browser, link)
-    main_page.open()
-
-    main_page.go_to_regional_settings()
+    with allure.step("Open"):
+        main_page.open()
+    with allure.step("Go to regional settings page"):
+        main_page.go_to_regional_settings()
 
     reg_set_page = RegionalSettingsPage(open_browser, open_browser.current_url)
-    reg_set_page.currency_change_on_usd()
-    reg_set_page.country_change_on_belarus()
+    with allure.step("Change currency"):
+        reg_set_page.currency_change_on_usd()
+    with allure.step("Change country"):
+        reg_set_page.country_change_on_belarus()
     reg_set_page.save_changes()
 
 
+@allure.story("Check changes of currency and country on main page")
 def test_check_changes(open_browser):
     link = "http://localhost/litecart/en/"
     main_page = MainPage(open_browser, link)
@@ -47,21 +57,24 @@ def test_check_changes(open_browser):
     reg_set_page.currency_change_on_usd()
     reg_set_page.country_change_on_belarus()
     reg_set_page.save_changes()
+    with allure.step("Check currency"):
+        main_page.currency_check()
+    with allure.step("Check country"):
+        main_page.country_check()
 
-    main_page.currency_check()
-    main_page.country_check()
 
 #####################################################################################################################
 
-
+@allure.story("Test login - mail: email@mail.ru; password: user")
 def test_login(open_browser):
     link = "http://localhost/litecart/en/"
     main_page = MainPage(open_browser, link)
     main_page.open()
+    with allure.step("Check login"):
+        main_page.login_user()
 
-    main_page.login_user()
 
-
+@allure.story("Test add 3 ducks in cart and go to cart")
 def test_duck(open_browser):
     link = "http://localhost/litecart/en/"
     main_page = MainPage(open_browser, link)
@@ -71,10 +84,13 @@ def test_duck(open_browser):
     main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
-    duck_page_test.add_duck()
-    duck_page_test.go_to_cart()
+    with allure.step("Add 3 ducks"):
+        duck_page_test.add_duck()
+    with allure.step("Go to cart"):
+        duck_page_test.go_to_cart()
 
 
+@allure.story("Check price duck and confirm order")
 def test_cart_and_confirm(open_browser):
     link = "http://localhost/litecart/en/"
     main_page = MainPage(open_browser, link)
@@ -88,13 +104,13 @@ def test_cart_and_confirm(open_browser):
     duck_page_test.go_to_cart()
 
     cart_page_test = CartPage(open_browser, open_browser.current_url)
-    cart_page_test.price_duck()
-    cart_page_test.confirm()
+    with allure.step("Check price duck(s)"):
+        cart_page_test.price_duck()
+    with allure.step("Confirm order"):
+        cart_page_test.confirm()
 
 
-import mysql.connector as mysql
-
-
+@allure.story("Check order in base")
 def test_sql():
     db = mysql.connect(
         host="localhost",
