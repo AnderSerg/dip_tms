@@ -1,6 +1,4 @@
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import time
+from selenium.webdriver.common.by import By
 from Pages.base_page import BasePage
 from Locators.cart_loc import CartLoc
 
@@ -22,8 +20,15 @@ class CartPage(BasePage):
         confirm_btn.click()
 
     def change_number_of_ducks(self):
-        change_number_of_ducks_input = self.chrome.find_element(*CartLoc.LOCATOR_ADD_DUCK_INPUT)
-        change_number_of_ducks_input.send_keys("3")
+        if self.chrome.find_element(By.XPATH, '//*[@id="box-checkout-cart"]/div/ul/li/form/div/p[1]/a/strong').text == \
+                'Yellow Duck':
+            change_number_of_ducks_input = self.chrome.find_element(By.XPATH, '//*[@id="box-checkout-cart"]/div/ul/li'
+                                                                              '/form/div/p[4]/input')
+            change_number_of_ducks_input.clear()
+            change_number_of_ducks_input.send_keys("3")
+        else:
+            change_number_of_ducks_input = self.chrome.find_element(*CartLoc.LOCATOR_ADD_DUCK_INPUT)
+            change_number_of_ducks_input.send_keys("3")
 
     def update_number_of_ducks(self):
         update_number_of_ducks_btn_cl = self.chrome.find_element(*CartLoc.LOCATOR_UPDATE_BTN_IN_CART)

@@ -1,6 +1,3 @@
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import time
 from Pages.base_page import BasePage
 from Locators.regional_settings_page_loc import RegionalSettingsPageLoc
 

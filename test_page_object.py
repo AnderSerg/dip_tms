@@ -49,14 +49,18 @@ def test_currency_and_country_change(open_browser):
 def test_check_changes(open_browser):
     link = "http://localhost/litecart/en/"
     main_page = MainPage(open_browser, link)
-    main_page.open()
-
-    main_page.go_to_regional_settings()
+    with allure.step("Open"):
+        main_page.open()
+    with allure.step("Go to regional settings page"):
+        main_page.go_to_regional_settings()
 
     reg_set_page = RegionalSettingsPage(open_browser, open_browser.current_url)
-    reg_set_page.currency_change_on_usd()
-    reg_set_page.country_change_on_belarus()
-    reg_set_page.save_changes()
+    with allure.step("Change currency"):
+        reg_set_page.currency_change_on_usd()
+    with allure.step("Change country"):
+        reg_set_page.country_change_on_belarus()
+    with allure.step("Save changes"):
+        reg_set_page.save_changes()
     with allure.step("Check currency"):
         main_page.currency_check()
     with allure.step("Check country"):
@@ -69,7 +73,8 @@ def test_check_changes(open_browser):
 def test_login(open_browser):
     link = "http://localhost/litecart/en/"
     main_page = MainPage(open_browser, link)
-    main_page.open()
+    with allure.step("Open"):
+        main_page.open()
     with allure.step("Check login"):
         main_page.login_user()
 
@@ -79,9 +84,10 @@ def test_duck(open_browser):
     link = "http://localhost/litecart/en/"
     main_page = MainPage(open_browser, link)
     main_page.open()
-
-    main_page.login_user()
-    main_page.go_to_duck_page()
+    with allure.step("Login user"):
+        main_page.login_user()
+    with allure.step("Go to duck page"):
+        main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
     with allure.step("Add 3 ducks"):
@@ -94,14 +100,18 @@ def test_duck(open_browser):
 def test_cart_and_confirm(open_browser):
     link = "http://localhost/litecart/en/"
     main_page = MainPage(open_browser, link)
-    main_page.open()
-
-    main_page.login_user()
-    main_page.go_to_duck_page()
+    with allure.step("Change country"):
+        main_page.open()
+    with allure.step("Login user"):
+        main_page.login_user()
+    with allure.step("Go to duck page"):
+        main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
-    duck_page_test.add_duck()
-    duck_page_test.go_to_cart()
+    with allure.step("Add duck"):
+        duck_page_test.add_duck()
+    with allure.step("Go to cart"):
+        duck_page_test.go_to_cart()
 
     cart_page_test = CartPage(open_browser, open_browser.current_url)
     with allure.step("Check price duck(s)"):

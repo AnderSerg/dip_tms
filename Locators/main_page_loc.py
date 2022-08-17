@@ -11,6 +11,7 @@ class MainPageLoc:
 
     LOCATOR_EDIT_ACCOUNT = (By.XPATH, '//*[@id="box-account"]/div/ul/li[3]/a')
 
+
 class LoginLoc:
     LOCATOR_EMAIL = (By.NAME, 'email')
     LOCATOR_PASSWORD = (By.NAME, 'password')
