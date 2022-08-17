@@ -20,3 +20,19 @@ class CartPage(BasePage):
     def confirm(self):
         confirm_btn = self.chrome.find_element(*CartLoc.LOCATOR_CONFIRM_BTN)
         confirm_btn.click()
+
+    def change_number_of_ducks(self):
+        change_number_of_ducks_input = self.chrome.find_element(*CartLoc.LOCATOR_ADD_DUCK_INPUT)
+        change_number_of_ducks_input.send_keys("3")
+
+    def update_number_of_ducks(self):
+        update_number_of_ducks_btn_cl = self.chrome.find_element(*CartLoc.LOCATOR_UPDATE_BTN_IN_CART)
+        update_number_of_ducks_btn_cl.click()
+
+    def remove_ducks(self):
+        remove_ducks_btn_cl = self.chrome.find_element(*CartLoc.LOCATOR_REMOVE_BTN_IN_CART)
+        remove_ducks_btn_cl.click()
+
+    def empty_cart(self):
+        check_empty_cart = self.chrome.find_element(*CartLoc.LOCATOR_EMPTY_CART)
+        check_empty_cart.click()

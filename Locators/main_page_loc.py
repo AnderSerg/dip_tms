@@ -9,6 +9,7 @@ class MainPageLoc:
 
     LOCATOR_DUCK_PAGE = (By.XPATH, '//*[@id="box-most-popular"]/div/ul/li[2]/a[1]/div[2]')
 
+    LOCATOR_EDIT_ACCOUNT = (By.XPATH, '//*[@id="box-account"]/div/ul/li[3]/a')
 
 class LoginLoc:
     LOCATOR_EMAIL = (By.NAME, 'email')

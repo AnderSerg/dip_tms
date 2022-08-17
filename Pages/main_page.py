@@ -42,3 +42,7 @@ class MainPage(BasePage):
     def go_to_duck_page(self):
         duck_page = self.chrome.find_element(*MainPageLoc.LOCATOR_DUCK_PAGE)
         duck_page.click()
+
+    def go_to_edit_account_page(self):
+        account_page = self.chrome.find_element(*MainPageLoc.LOCATOR_EDIT_ACCOUNT)
+        account_page.click()

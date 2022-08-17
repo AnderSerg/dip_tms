@@ -18,3 +18,8 @@ class DuckPage(BasePage):
     def go_to_cart(self):
         go_to_cart_btn = self.chrome.find_element(*DuckLoc.LOCATOR_GO_TO_CART)
         go_to_cart_btn.click()
+
+    def add_one_duck(self):
+        add_duck_btn = self.chrome.find_element(*DuckLoc.LOCATOR_ADD_TO_CART)
+        add_duck_btn.click()
+        time.sleep(1)
