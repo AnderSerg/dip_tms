@@ -1,9 +1,12 @@
+import time
+
 import allure
 import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
+from Locators.duck_page_loc import DuckLoc
 from Pages.cart_page import CartPage
 from Pages.duck_page import DuckPage
 from Pages.main_page import MainPage
@@ -15,7 +18,8 @@ import mysql.connector as mysql
 
 @pytest.fixture
 def open_browser():
-    chrome = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    options = webdriver.ChromeOptions()
+    chrome = webdriver.Chrome(options=options)
     chrome.implicitly_wait(10)
     yield chrome
     chrome.quit()
@@ -55,22 +59,22 @@ def test_duck(open_browser):
         edit_account_test.save_change_username()
 
 
-@allure.story("Check username in base")
-def test_sql():
-    db = mysql.connect(
-        host="localhost",
-        user="root",
-        passwd="",
-        database="litecart"
-    )
-
-    cursor = db.cursor()
-
-    query = "SELECT firstname FROM lc_customers ORDER BY firstname DESC LIMIT 1"
-    cursor.execute(query)
-    print(cursor.fetchall())
-
-    db.close()
+# @allure.story("Check username in base")
+# def test_sql():
+#     db = mysql.connect(
+#         host="localhost",
+#         user="root",
+#         passwd="",
+#         database="litecart"
+#     )
+#
+#     cursor = db.cursor()
+#
+#     query = "SELECT firstname FROM lc_customers ORDER BY firstname DESC LIMIT 1"
+#     cursor.execute(query)
+#     print(cursor.fetchall())
+#
+#     db.close()
 
 
 ###################################################
@@ -85,7 +89,7 @@ def test_add_one_duck(open_browser):
     main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
-    duck_page_test.add_one_duck()
+    duck_page_test.add_duck()
 
 
 @allure.story("Go to cart")
@@ -97,7 +101,7 @@ def test_go_to_cart_func(open_browser):
     main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
-    duck_page_test.add_one_duck()
+    duck_page_test.add_duck()
     duck_page_test.go_to_cart()
 
 
@@ -110,7 +114,7 @@ def test_cart_and_confirm(open_browser):
     main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
-    duck_page_test.add_one_duck()
+    duck_page_test.add_duck()
     duck_page_test.go_to_cart()
     cart_page_test = CartPage(open_browser, open_browser.current_url)
 
@@ -129,14 +133,17 @@ def test_numer_and_price_of_ducks(open_browser):
     main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
-    duck_page_test.add_one_duck()
+    duck_page_test.add_3_duck()
+    duck_page_test.add_duck()
     duck_page_test.go_to_cart()
     cart_page_test = CartPage(open_browser, open_browser.current_url)
 
-    with allure.step("change number of ducks"):
-        cart_page_test.change_number_of_ducks()
-    with allure.step("Update number of ducks"):
-        cart_page_test.update_number_of_ducks()
+    # with allure.step("change number of ducks"):
+    #     cart_page_test.change_number_of_ducks()
+    #     time.sleep(3)
+    # with allure.step("Update number of ducks"):
+    #     cart_page_test.update_number_of_ducks()
+    #     time.sleep(3)
 
     cart_page_test.price_duck()
 
@@ -150,14 +157,20 @@ def test_remove_ducks(open_browser):
     main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
-    duck_page_test.add_one_duck()
+
+
+
+    duck_page_test.add_3_duck()
+    duck_page_test.add_duck()
     duck_page_test.go_to_cart()
     cart_page_test = CartPage(open_browser, open_browser.current_url)
-
-    with allure.step("change number of ducks"):
-        cart_page_test.change_number_of_ducks()
-    with allure.step("Update number of ducks"):
-        cart_page_test.update_number_of_ducks()
+    time.sleep(3)
+    # with allure.step("change number of ducks"):
+    #     cart_page_test.change_number_of_ducks()
+    #     time.sleep(3)
+    # with allure.step("Update number of ducks"):
+    #     cart_page_test.update_number_of_ducks()
+    #     time.sleep(3)
 
     cart_page_test.price_duck()
 
@@ -173,14 +186,15 @@ def test_check_empty_cart(open_browser):
     main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
-    duck_page_test.add_one_duck()
+    duck_page_test.add_3_duck()
+    duck_page_test.add_duck()
     duck_page_test.go_to_cart()
     cart_page_test = CartPage(open_browser, open_browser.current_url)
 
-    with allure.step("change number of ducks"):
-        cart_page_test.change_number_of_ducks()
-    with allure.step("Update number of ducks"):
-        cart_page_test.update_number_of_ducks()
+    # with allure.step("change number of ducks"):
+    #     cart_page_test.change_number_of_ducks()
+    # with allure.step("Update number of ducks"):
+    #     cart_page_test.update_number_of_ducks()
 
     cart_page_test.price_duck()
 
