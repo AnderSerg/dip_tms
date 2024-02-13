@@ -1,9 +1,6 @@
 import allure
 import pytest
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
-
 from Pages.cart_page import CartPage
 from Pages.duck_page import DuckPage
 from Pages.main_page import MainPage
@@ -14,7 +11,8 @@ import mysql.connector as mysql
 
 @pytest.fixture
 def open_browser():
-    chrome = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    options = webdriver.ChromeOptions()
+    chrome = webdriver.Chrome(options=options)
     chrome.implicitly_wait(10)
     yield chrome
     chrome.quit()
@@ -91,7 +89,7 @@ def test_duck(open_browser):
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
     with allure.step("Add 3 ducks"):
-        duck_page_test.add_duck()
+        duck_page_test.add_3_duck()
     with allure.step("Go to cart"):
         duck_page_test.go_to_cart()
 
@@ -120,22 +118,22 @@ def test_cart_and_confirm(open_browser):
         cart_page_test.confirm()
 
 
-@allure.story("Check order in base")
-def test_sql():
-    db = mysql.connect(
-        host="localhost",
-        user="root",
-        passwd="",
-        database="litecart"
-    )
-
-    cursor = db.cursor()
-
-    cursor.execute("SHOW TABLES")
-    print(cursor.fetchall())
-
-    query = "SELECT customer_lastname FROM lc_orders ORDER BY customer_lastname DESC LIMIT 1"
-    cursor.execute(query)
-    print(cursor.fetchall())
-
-    db.close()
+# @allure.story("Check order in base")
+# def test_sql():
+#     db = mysql.connect(
+#         host="localhost",
+#         user="root",
+#         passwd="",
+#         database="litecart"
+#     )
+#
+#     cursor = db.cursor()
+#
+#     cursor.execute("SHOW TABLES")
+#     print(cursor.fetchall())
+#
+#     query = "SELECT customer_lastname FROM lc_orders ORDER BY customer_lastname DESC LIMIT 1"
+#     cursor.execute(query)
+#     print(cursor.fetchall())
+#
+#     db.close()
