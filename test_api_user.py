@@ -6,6 +6,7 @@ class TestUserAPI:
     def test_user(self):
         headers = {
             'Content-type': 'application/json',
+            'api_key': 'special-key',
             'Accept': 'application/json'
         }
 

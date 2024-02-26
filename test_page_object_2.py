@@ -59,25 +59,23 @@ def test_duck(open_browser):
         edit_account_test.save_change_username()
 
 
-# @allure.story("Check username in base")
-# def test_sql():
-#     db = mysql.connect(
-#         host="localhost",
-#         user="root",
-#         passwd="",
-#         database="litecart"
-#     )
-#
-#     cursor = db.cursor()
-#
-#     query = "SELECT firstname FROM lc_customers ORDER BY firstname DESC LIMIT 1"
-#     cursor.execute(query)
-#     print(cursor.fetchall())
-#
-#     db.close()
+@allure.story("Check username in base")
+def test_sql():
+    db = mysql.connect(
+        host="localhost",
+        user="root",
+        passwd="",
+        database="litecart",
+        port=3307
+    )
 
+    cursor = db.cursor()
 
-###################################################
+    query = "SELECT firstname FROM lc_customers ORDER BY firstname DESC LIMIT 1"
+    cursor.execute(query)
+    print(cursor.fetchall())
+
+    db.close()
 
 
 @allure.story("Add one duck")
@@ -157,8 +155,6 @@ def test_remove_ducks(open_browser):
     main_page.go_to_duck_page()
 
     duck_page_test = DuckPage(open_browser, open_browser.current_url)
-
-
 
     duck_page_test.add_3_duck()
     duck_page_test.add_duck()

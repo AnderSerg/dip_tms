@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 def test_wiki_search_field():
-    chrome = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    chrome = webdriver.Chrome()
     try:
         url = 'http://localhost/litecart/en/'
         chrome.get(url)

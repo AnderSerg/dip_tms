@@ -5,6 +5,7 @@ class TestPetAPI:
     def test_pet(self):
         headers = {
             'Content-type': 'application/json',
+            'api_key': 'special-key',
             'Accept': 'application/json'
         }
 
